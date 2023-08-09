@@ -22,6 +22,7 @@ module Fastlane
       IOS_ARGS_MAP = {
         target: 'target',
         team_name: nil,
+        distribution_name: 'distribution-name',
         pp_uuid: 'pp-uuid',
         log_level: 'log-level',
       }
@@ -202,6 +203,13 @@ module Fastlane
             key: :pp_uuid,
             env_name: "TITANIUM_IOS_PROVISIONING_PROFILE",
             description: "GUID of the provisioning profile to be used for signing",
+            is_string: true,
+            default_value: ''
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :distribution_name,
+            env_name: "TITANIUM_IOS_DISTRIBUTION_NAME",
+            description: "The iOS Distribution Certificate to use",
             is_string: true,
             default_value: ''
           ),
