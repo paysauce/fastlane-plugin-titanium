@@ -9,7 +9,7 @@ module Fastlane
       TITANIUM_ANDROID_RELEASE_AAB_PATH = :TITANIUM_ANDROID_RELEASE_AAB_PATH
     end
 
-    class TiBuildAction < Action
+    class TitaniumAction < Action
       
       # Mapping action parameters to cli args
       ANDROID_ARGS_MAP = {
@@ -290,11 +290,11 @@ module Fastlane
 
       def self.example_code
         [
-          "ti_build(
+          "titanium(
             platform: 'ios',
             target: 'adhoc'
           )",
-          "ti_build(
+          "titanium(
             platform: 'android',
             keystore: './staging.keystore',
             keystore_alias: 'alias_name',
