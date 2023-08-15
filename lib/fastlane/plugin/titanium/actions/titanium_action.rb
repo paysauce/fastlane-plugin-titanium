@@ -6,9 +6,10 @@ module Fastlane
     module SharedValues
       TITANIUM_IOS_RELEASE_BUILD_PATH = :TITANIUM_IOS_RELEASE_BUILD_PATH
       TITANIUM_ANDROID_RELEASE_BUILD_PATH = :TITANIUM_ANDROID_RELEASE_BUILD_PATH
+      TITANIUM_ANDROID_RELEASE_AAB_PATH = :TITANIUM_ANDROID_RELEASE_AAB_PATH
     end
 
-    class TitaniumAction < Action
+    class TiBuildAction < Action
       
       # Mapping action parameters to cli args
       ANDROID_ARGS_MAP = {
@@ -119,6 +120,9 @@ module Fastlane
         if params[:platform].to_s == 'android'
           output = Dir["./build/out/*.apk"].first
           ENV['TITANIUM_ANDROID_RELEASE_BUILD_PATH'] = output
+
+          aab = Dir["./build/out/*.aab"].first
+          ENV['TITANIUM_ANDROID_RELEASE_AAB_PATH'] = aab
 
           Actions.lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH] = output
         else
@@ -268,6 +272,7 @@ module Fastlane
       def self.output
         [
           ['TITANIUM_ANDROID_RELEASE_BUILD_PATH', 'Path to the signed release APK if it was generated'],
+          ['TITANIUM_ANDROID_RELEASE_AAB_PATH', 'Path to the signed release AAB if it was generated'],
           ['TITANIUM_IOS_RELEASE_BUILD_PATH', 'Path to the signed release IPA if it was generated']
         ]
       end
@@ -285,11 +290,11 @@ module Fastlane
 
       def self.example_code
         [
-          "titanium(
+          "ti_build(
             platform: 'ios',
             target: 'adhoc'
           )",
-          "titanium(
+          "ti_build(
             platform: 'android',
             keystore: './staging.keystore',
             keystore_alias: 'alias_name',
